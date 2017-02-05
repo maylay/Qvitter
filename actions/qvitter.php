@@ -84,7 +84,15 @@ class QvitterAction extends ApiAction
 		$siterootdomain = common_config('site','server');
 		$qvitterpath = Plugin::staticPath('Qvitter', '');
 		$apiroot = common_path('api/', StatusNet::isHTTPS());
-		$attachmentroot = common_path('attachment/', StatusNet::isHTTPS());
+
+		$attachmentconfig=common_config('attachments');
+		if(StatusNet::isHTTPS() && $attachmentconfig['sslserver']){
+			$attachmentroot ='https://'.$attachmentconfig['sslserver'].$attachmentconfig['path'];
+		} elseif(!StatusNet::isHTTPS() && $attachmentconfig['server']) {
+			$attachmentroot ='http://'.$attachmentconfig['server'].$attachmentconfig['path'];
+		} else {
+			$attachmentroot = common_path('attachment/', StatusNet::isHTTPS());
+		}
 		$instanceurl = common_path('', StatusNet::isHTTPS());
         $favicon_path = QvitterPlugin::settings("favicon_path");
 

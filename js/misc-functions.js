@@ -730,7 +730,12 @@ function isLocalURL(url) {
 		return true;
 		}
 	else {
-		return false;
+		if(url.substring(0,window.siteAttachmentURLBase.length) == window.siteAttachmentURLBase) {
+			return true;
+			}
+		else {
+			return false;
+			}
 		}
 	}
 
