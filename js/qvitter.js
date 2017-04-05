@@ -50,9 +50,14 @@ checkLocalStorage();
 window.loggedIn = iterateRecursiveReplaceHtmlSpecialChars(window.loggedIn);
 
 // hack to supress basic auth popup, e.g. if the user has to tabs open and
-// log out in one of them. but microsoft browsers doesn't support this
-if(typeof bowser.msie == 'undefined' && typeof bowser.msedge == 'undefined') {
-	window.apiRoot = window.apiRoot.replace('://','://x:x@');
+// log out in one of them. but microsoft browsers and chrome 59+ doesn't support this
+if(typeof bowser != 'undefined') {
+	var bowserIntVersion = parseInt(bowser.version,10);
+	if(typeof bowser.msie == 'undefined'
+	&& typeof bowser.msedge == 'undefined'
+	&& !(typeof bowser.chrome != 'undefined' && bowser.chrome === true && bowserIntVersion <= 59)) {
+		window.apiRoot = window.apiRoot.replace('://','://x:x@');
+		}
 	}
 
 
