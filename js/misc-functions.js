@@ -1096,6 +1096,11 @@ function guessInstanceUrlWithoutProtocolFromProfileUrlAndNickname(profileUrl, ni
 		guessedInstanceUrl = guessedInstanceUrl.slice(0,-1);
 		}
 
+	// fix new mastodon style profile urls
+	if(guessedInstanceUrl.indexOf('/@') > -1) {
+		guessedInstanceUrl = guessedInstanceUrl.substring(0, guessedInstanceUrl.indexOf('/@'));
+	}
+
 	return guessedInstanceUrl;
 	}
 

@@ -532,6 +532,7 @@ $('#find-someone input').keyup(function(e){
 			var domain = val.substring(val.indexOf('@')+1);
 			var urlToTry = 'https://' + domain + '/' + username;
 			var secondUrlToTry = 'http://' + domain + '/' + username;
+			var thirdUrlToTry = 'https://' + domain + '/@' + username; // mastodon
 
 			getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(urlToTry),function(data){
 				if(data && data.local !== null) {
@@ -547,7 +548,16 @@ $('#find-someone input').keyup(function(e){
 								});
 							}
 						else {
-							cantFindSomeone(thisFindSomeoneInput);
+							getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(thirdUrlToTry),function(data){
+								if(data && data.local !== null) {
+									setNewCurrentStream(pathToStreamRouter('user/' + data.local.id),true,false,function(){
+										foundSomeone(thisFindSomeoneInput);
+										});
+									}
+								else {
+									cantFindSomeone(thisFindSomeoneInput);
+									}
+								});
 							}
 						});
 					}
@@ -558,7 +568,6 @@ $('#find-someone input').keyup(function(e){
 			}
 		}
 	});
-
 
 function cantFindSomeone(thisFindSomeoneInput) {
 	thisFindSomeoneInput.css('background-color','pink');

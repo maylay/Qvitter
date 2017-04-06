@@ -54,7 +54,6 @@ class ApiExternalUserShowAction extends ApiPrivateAuthAction
 		$this->profile = new stdClass();
         $this->profile->external = null;
 		$this->profile->local = null;
-        $this->profile->ostatus = null;
 
         // the user might not exist in our db yet, try to use the Ostatus plugin
         // to get it in there
@@ -112,6 +111,8 @@ class ApiExternalUserShowAction extends ApiPrivateAuthAction
 
 		if($local_profile instanceof Profile) {
 
+            $this->profile->local = $this->twitterUserArray($local_profile);
+
 			// if profile url is not ending with nickname, this is probably a single user instance
 			if(!substr($local_profile->profileurl, -strlen($local_profile->nickname))===$local_profile->nickname) {
 				$external_instance_url = $local_profile->profileurl;
@@ -128,7 +129,6 @@ class ApiExternalUserShowAction extends ApiPrivateAuthAction
 				}
 
 			$this->profile->external = $external_profile;
-			$this->profile->local = $this->twitterUserArray($local_profile);
 			return true;
 			}
 
