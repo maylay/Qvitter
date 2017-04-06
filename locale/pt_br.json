@@ -197,8 +197,8 @@
 	"mutedStreamDescription":"Você escondeu estas contas de sua linha do tempo. Você ainda receberá notificações destas contas, a menos que você selecione &quot;Esconder notificações de usuários calados&quot; no menu de engrenagem na página de notificações.",
 	"profileAndSettings":"Perfil e ajustes",
 	"profileSettings":"Ajustes de perfil",
-	"thisIsABookmark":"This is a bookmark created in the Classic interface",
-	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
-	"findSomeone":"Find someone",
-	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
+	"thisIsABookmark":"Este é um favorito criado na interface clássica",
+	"thisIsARemoteUser":"<strong>Atenção!</strong> Este é um usuário remoto. Esta página é apenas uma cópia preservada do perfil do usuário, e inclui apenas dados conhecidos por esta instância do GNU social. Visite <a href=\"{remote-profile-url}\" donthijack>o perfil deste usuário no servidor dele</a> para ver o perfil completo.",
+	"findSomeone":"Encontrar alguém",
+	"findSomeoneTooltip":"Escreva o nome de usuário ou url do perfil, por exemplo @usuariolocal ou https://instancia.remota/apelido"
 }
