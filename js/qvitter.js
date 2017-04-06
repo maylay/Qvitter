@@ -486,6 +486,96 @@ $('body').on('mouseleave','.hover-card', function(e) {
 	});
 
 
+/* ·
+   ·
+   ·   find someone tool
+   ·
+   · · · · · · · · · · · · · */
+
+$('#find-someone input').keyup(function(e){
+	var thisFindSomeoneInput = $(this);
+	if(e.keyCode==13 && !thisFindSomeoneInput.hasClass('submitted')) {
+		thisFindSomeoneInput.addClass('submitted');
+		thisFindSomeoneInput.attr('disabled','disabled');
+		var val = $.trim(thisFindSomeoneInput.val());
+
+		// if this is a simple text input, we assume it is a local user
+		if(val.length>1 && /^(@)?[a-zA-Z0-9]+$/.test(val)) {
+			if(val.indexOf('@') == 0) {
+				val = val.replace('@','');
+				}
+			setNewCurrentStream(pathToStreamRouter(val),true,false,function(){
+				foundSomeone(thisFindSomeoneInput);
+				});
+			}
+		// urls might be a remote user
+		else if(val.length==0 || /^(ftp|http|https):\/\/[^ "]+$/.test(val)) {
+			getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(val),function(data){
+				if(data && data.local !== null) {
+					setNewCurrentStream(pathToStreamRouter('user/' + data.local.id),true,false,function(){
+						foundSomeone(thisFindSomeoneInput);
+						});
+					}
+				else {
+					cantFindSomeone(thisFindSomeoneInput);
+					}
+				});
+			}
+		// @user@instance.domain style syntax
+		else if(val.length==0 || /^(@)?[a-zA-Z0-9]+@[a-zA-Z0-9\-]+(\.)(.*)+$/.test(val)) {
+
+			if(val.indexOf('@') == 0) {
+				val = val.substring(1)
+			}
+
+			var username = val.substring(0, val.indexOf('@'));
+			var domain = val.substring(val.indexOf('@')+1);
+			var urlToTry = 'https://' + domain + '/' + username;
+			var secondUrlToTry = 'http://' + domain + '/' + username;
+
+			getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(urlToTry),function(data){
+				if(data && data.local !== null) {
+					setNewCurrentStream(pathToStreamRouter('user/' + data.local.id),true,false,function(){
+						foundSomeone(thisFindSomeoneInput);
+						});
+					}
+				else {
+					getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(secondUrlToTry),function(data){
+						if(data && data.local !== null) {
+							setNewCurrentStream(pathToStreamRouter('user/' + data.local.id),true,false,function(){
+								foundSomeone(thisFindSomeoneInput);
+								});
+							}
+						else {
+							cantFindSomeone(thisFindSomeoneInput);
+							}
+						});
+					}
+				});
+			}
+		else {
+			cantFindSomeone(thisFindSomeoneInput);
+			}
+		}
+	});
+
+
+function cantFindSomeone(thisFindSomeoneInput) {
+	thisFindSomeoneInput.css('background-color','pink');
+	thisFindSomeoneInput.effect('shake',{distance:5,times:3,duration:700},function(){
+		thisFindSomeoneInput.animate({backgroundColor:'#fff'},1000);
+		thisFindSomeoneInput.removeAttr('disabled');
+		thisFindSomeoneInput.removeClass('submitted');
+		thisFindSomeoneInput.focus();
+		});
+	}
+function foundSomeone(thisFindSomeoneInput) {
+	thisFindSomeoneInput.removeAttr('disabled');
+	thisFindSomeoneInput.val('');
+	thisFindSomeoneInput.blur();
+	thisFindSomeoneInput.removeClass('submitted');
+	}
+
 
 
 /* ·
@@ -970,6 +1060,9 @@ function proceedToSetLanguageAndLogin(data){
 	$('#clear-history').html(window.sL.clearHistory);
 	$('#user-screen-name, #user-avatar, #user-name').attr('data-tooltip', window.sL.viewMyProfilePage);
 	$('#top-menu-profile-link-view-profile').html(window.sL.viewMyProfilePage);
+	$('#find-someone input').attr('placeholder',window.sL.findSomeone);
+	$('#find-someone input').attr('data-tooltip',window.sL.findSomeoneTooltip);
+
 
 	// show site body now
 	$('#user-container').css('display','block');
@@ -1841,42 +1934,34 @@ $('body').on('click','a', function(e) {
 		}
 	// hijack link if we find a matching link that qvitter can handle
 	else {
-		var streamObject = URLtoStreamRouter($(this).attr('href'));
+
+		var hrefAttr = $(this).attr('href');
+
+		// this might be a remote profile that we want to reroute to a local instance/user/id url, let's check our cache
+		if(typeof window.convertStatusnetProfileUrlToUserArrayCacheKey[hrefAttr] != 'undefined') {
+			if(typeof window.userArrayCache[window.convertStatusnetProfileUrlToUserArrayCacheKey[hrefAttr]] != 'undefined') {
+				var cachedUserArray = window.userArrayCache[window.convertStatusnetProfileUrlToUserArrayCacheKey[hrefAttr]];
+				if(cachedUserArray.local.is_local === false) {
+					hrefAttr = window.siteInstanceURL + 'user/' + cachedUserArray.local.id;
+					}
+				}
+			}
+		else if(typeof window.convertUriToUserArrayCacheKey[hrefAttr] != 'undefined') {
+			if(typeof window.userArrayCache[window.convertUriToUserArrayCacheKey[hrefAttr]] != 'undefined') {
+				var cachedUserArray = window.userArrayCache[window.convertUriToUserArrayCacheKey[hrefAttr]];
+				if(cachedUserArray.local.is_local === false) {
+					hrefAttr = window.siteInstanceURL + 'user/' + cachedUserArray.local.id;
+					}
+				}
+			}
+
+		var streamObject = URLtoStreamRouter(hrefAttr);
 		if(streamObject && streamObject.stream) {
 			e.preventDefault();
 
-			// if this is a user/{id} type link we want to find the nickname before setting a new stream
-			// the main reason is that we want to update the browsers location bar and the .stream-selecton
-			// links as fast as we can. we rather not wait for the server response
-			if(streamObject.name == 'profile by id') {
-
-				// pathToStreamRouter() might have found a cached nickname
-				if(streamObject.nickname) {
-					setNewCurrentStream(pathToStreamRouter(streamObject.nickname),true,streamObject.id);
-					}
-				// otherwise we might follow the user and thereby already know its nickname
-				else if (typeof window.following != 'undefined' && typeof window.following[streamObject.id] != 'undefined') {
-					setNewCurrentStream(pathToStreamRouter(window.following[streamObject.id].username),true,streamObject.id);
-					}
-				// if the text() of the clicked element looks like a user nickname, use that (but send id to setNewCurrentStream() in case this is bad data)
-				else if(/^@[a-zA-Z0-9]+$/.test($(e.target).text()) || /^[a-zA-Z0-9]+$/.test($(e.target).text())) {
-					var nickname = $(e.target).text();
-					if(nickname.indexOf('@') == 0) {
-						nickname = nickname.substring(1); // remove any starting @
-						}
-					setNewCurrentStream(pathToStreamRouter(nickname),true,streamObject.id);
-					}
-				// if we can't figure out or guess a nickname, query the server for it
-				else {
-					getNicknameByUserIdFromAPI(streamObject.id,function(nickname) {
-						if(nickname) {
-							setNewCurrentStream(pathToStreamRouter(nickname),true,false);
-							}
-						else {
-							alert('user not found');
-							}
-						});
-					}
+			// if this is a user/{id} type link but we know the nickname already
+			if(streamObject.name == 'profile by id' && streamObject.nickname !== false) {
+				setNewCurrentStream(pathToStreamRouter(streamObject.nickname),true,streamObject.id);
 				}
 			// same with group/{id}/id links
 			else if(streamObject.name == 'group notice stream by id') {

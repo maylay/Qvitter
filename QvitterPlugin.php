@@ -160,6 +160,10 @@ class QvitterPlugin extends Plugin {
 	// route/reroute urls
     public function onRouterInitialized($m)
     {
+
+        $m->connect('api/qvitter/statuses/user_timeline.:format',
+                    array('action' => 'ApiQvitterTimelineUser',
+                          'format' => '(xml|json|rss|atom|as)'));
 		$m->connect(':nickname/mutes',
 					array('action' => 'qvitter',
 						  'nickname' => Nickname::INPUT_FMT));
@@ -371,6 +375,10 @@ class QvitterPlugin extends Plugin {
 									array('action' => 'shownotice'),
 									array('notice' => '[0-9]+'),
 									'qvitter');
+			URLMapperOverwrite::overwrite_variable($m, 'user/:id',
+									array('action' => 'userbyid'),
+									array('id' => '[0-9]+'),
+									'qvitter');
 			URLMapperOverwrite::overwrite_variable($m, 'conversation/:id',
 									array('action' => 'conversation'),
 									array('id' => '[0-9]+'),
@@ -397,6 +405,7 @@ class QvitterPlugin extends Plugin {
 		case 'api/favorites.json':
 		case 'api/statuses/friends_timeline.json':
 		case 'api/statuses/user_timeline.json':
+        case 'api/qvitter/statuses/user_timeline.json':
 
 			// add logged in user's user array
 			if (common_logged_in() && !isset($_GET['screen_name']) && !isset($_GET['id'])) {
@@ -409,13 +418,17 @@ class QvitterPlugin extends Plugin {
 
                 if(isset($_GET['screen_name'])) {
                     $user = User::getKV('nickname', $_GET['screen_name']);
+                    if($user instanceof User) {
+                        $profile = $user->getProfile();
+                        }
                     }
                 elseif(isset($_GET['id'])) {
+                    $profile = Profile::getKV('id', $_GET['id']);
                     $user = User::getKV('id', $_GET['id']);
                     }
 
-                if($user instanceof User) {
-					header('Qvitter-User-Array: '.json_encode($this->qvitterTwitterUserArray($user->getProfile())));
+                if(isset($profile) && $profile instanceof Profile) {
+					header('Qvitter-User-Array: '.json_encode($this->qvitterTwitterUserArray($profile)));
 					}
 				}
 			break;

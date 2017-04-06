@@ -893,6 +893,7 @@ function cacheSyntaxHighlightingGroups() {
 window.userArrayCache = new Object();
 window.convertUriToUserArrayCacheKey = new Object();
 window.convertStatusnetProfileUrlToUserArrayCacheKey = new Object();
+window.convertLocalIdToUserArrayCacheKey = new Object();
 
 function userArrayCacheStore(data) {
 
@@ -949,6 +950,7 @@ function userArrayCacheStore(data) {
 		window.userArrayCache[key].modified = Date.now();
 
 		// easy conversion between URI and statusnet_profile_url and the key we're using in window.userArrayCache
+		window.convertLocalIdToUserArrayCacheKey[parseInt(dataToStore.local.id, 10)] = key;
 		window.convertUriToUserArrayCacheKey[dataToStore.local.ostatus_uri] = key;
 		window.convertStatusnetProfileUrlToUserArrayCacheKey[dataToStore.local.statusnet_profile_url] = key;
 		}
@@ -963,6 +965,7 @@ function userArrayCacheStore(data) {
 			window.userArrayCache[key].local = dataToStore.local;
 
 			// easy conversion between URI and statusnet_profile_url and the key we're using in window.userArrayCache
+			window.convertLocalIdToUserArrayCacheKey[dataToStore.local.id] = key;
 			window.convertUriToUserArrayCacheKey[dataToStore.local.ostatus_uri] = key;
 			window.convertStatusnetProfileUrlToUserArrayCacheKey[dataToStore.local.statusnet_profile_url] = key;
 			}
@@ -993,8 +996,12 @@ function userArrayCacheGetByLocalNickname(localNickname) {
 	}
 
 function userArrayCacheGetByProfileUrlAndNickname(profileUrl, nickname) {
+	var possibleLocalId = false;
 	if(nickname.substring(0,1) == '@') {
 		nickname = nickname.substring(1);
+		}
+	if(profileUrl.indexOf(window.siteInstanceURL + 'user/') == 0) {
+		possibleLocalId = parseInt(profileUrl.substring(window.siteInstanceURL.length+5),10);
 		}
 	// the url might match a known profile uri
 	if(typeof window.convertUriToUserArrayCacheKey[profileUrl] != 'undefined') {
@@ -1006,6 +1013,12 @@ function userArrayCacheGetByProfileUrlAndNickname(profileUrl, nickname) {
 	else if(typeof window.convertStatusnetProfileUrlToUserArrayCacheKey[profileUrl] != 'undefined') {
 		if(typeof window.userArrayCache[window.convertStatusnetProfileUrlToUserArrayCacheKey[profileUrl]] != 'undefined') {
 			return window.userArrayCache[window.convertStatusnetProfileUrlToUserArrayCacheKey[profileUrl]];
+			}
+		}
+	// or the local id might match a known id
+	else if(typeof window.convertLocalIdToUserArrayCacheKey[possibleLocalId] != 'undefined') {
+		if(typeof window.userArrayCache[window.convertLocalIdToUserArrayCacheKey[possibleLocalId]] != 'undefined') {
+			return window.userArrayCache[window.convertLocalIdToUserArrayCacheKey[possibleLocalId]];
 			}
 		}
 	// or we try to guess the instance url, and see if we have a match in our cache
@@ -1244,7 +1257,7 @@ function updateUserDataInStream() {
 			// profile urls
 			// try to find the last account group with this id, if the statusnet_profile_url seems to
 			// be changed we replace it wherever we can find it, even in list urls etc that starts with statusnet_profile_url
-			if($('a.account-group[data-user-id="' + userArray.local.id + '"]').last().attr('href') != userArray.local.statusnet_profile_url) {
+			if(userArray.local.is_local === true && $('a.account-group[data-user-id="' + userArray.local.id + '"]').last().attr('href') != userArray.local.statusnet_profile_url) {
 				var oldStatusnetProfileURL = $('a.account-group[data-user-id="' + userArray.local.id + '"]').last().attr('href');
 				// all links with the exact statusnet_profile_url
 				$.each($('[href="' + oldStatusnetProfileURL + '"]'),function(){
@@ -2234,6 +2247,29 @@ function appendAllBookmarks(bookmarkContainer) {
 	$('#bookmark-container').sortable({delay: 100});
 	$('#bookmark-container').disableSelection();
 	}
+
+
+/* ·
+   ·
+   ·   Change the header of an item in the history container by href attribute
+   ·
+   · · · · · · · · · · · · · */
+
+function updateHistoryContainerItemByHref(href, streamHeader) {
+	$('#history-container .stream-selection[href="' + href + '"]').html(streamHeader + '<i class="chev-right" data-tooltip="' + window.sL.tooltipBookmarkStream + '"></i>');
+	updateHistoryLocalStorage();
+}
+
+/* ·
+   ·
+   ·   Remove items in the history container by href attribute
+   ·
+   · · · · · · · · · · · · · */
+
+function removeHistoryContainerItemByHref(href) {
+	$('#history-container .stream-selection[href="' + href + '"]').remove();
+	updateHistoryLocalStorage();
+}
 
 
 /* ·

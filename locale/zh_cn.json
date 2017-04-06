@@ -196,5 +196,8 @@
 	"mutedStreamDescription":"你已从你的时间线中隐藏了这些用户。但你仍将收到这些用户的通知，除非你在设置页的齿轮菜单中选择“隐藏被忽略用户的通知”。",
 	"profileAndSettings":"个人档案及设置",
 	"profileSettings":"个人设置",
-	"thisIsABookmark":"该书签系在旧版视图下创建。"
+	"thisIsABookmark":"该书签系在旧版视图下创建。",
+	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
+	"findSomeone":"Find someone",
+	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
 }

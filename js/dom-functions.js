@@ -394,6 +394,18 @@ function buildProfileCard(data) {
 	if(isUserMuted(data.id)) {
 		is_muted = ' user-muted';
 		}
+	// local or remote user?
+	var local_or_remote = '';
+	var remote_user_info = '';
+	var serverUrl = guessInstanceUrlWithoutProtocolFromProfileUrlAndNickname(data.statusnet_profile_url, data.screen_name);
+	data.screenNameWithServer = '@' + data.screen_name + '@' + serverUrl;
+	if(data.is_local !== true) {
+		remote_user_info = '<div class="remote-user-info">' + window.sL.thisIsARemoteUser.replace('{remote-profile-url}',data.statusnet_profile_url) + '</div>'
+		local_or_remote = ' remote-user';
+		}
+	else {
+		local_or_remote = ' local-user';
+	}
 
 	var followButton = '';
 
@@ -420,8 +432,9 @@ function buildProfileCard(data) {
 
 	// full card html
 	var profileCardHtml = '\
-		<div class="profile-card' + is_me + logged_in + is_muted + '">\
+		<div class="profile-card' + is_me + logged_in + is_muted + local_or_remote + '">\
 			<script class="profile-json" type="application/json">' + JSON.stringify(data) + '</script>\
+			<a href="' + data.statusnet_profile_url + '" class="ostatus-link" data-tooltip="' + window.sL.goToTheUsersRemoteProfile + '" donthijack></a>\
 			<div class="profile-header-inner' + is_silenced + is_sandboxed + '" style="' + coverPhotoHtml + '" data-user-id="' + data.id + '" data-screen-name="' + data.screen_name + '">\
 				<div class="profile-header-inner-overlay"></div>\
 				<a class="profile-picture" href="' + data.profile_image_url_original + '">\
@@ -432,6 +445,7 @@ function buildProfileCard(data) {
 					<span class="silenced-flag" data-tooltip="' + window.sL.silencedStreamDescription + '">' + window.sL.silenced + '</span>\
 					<span class="sandboxed-flag" data-tooltip="' + window.sL.sandboxedStreamDescription + '">' + window.sL.sandboxed + '</span>\
 					<h2 class="username">\
+						<span class="screen-name-with-server" data-user-id="' + data.id + '">' + data.screenNameWithServer + '</span>\
 						<span class="screen-name" data-user-id="' + data.id + '">@' + data.screen_name + '</span>\
 						' + follows_you + '\
 					</h2>\
@@ -446,6 +460,7 @@ function buildProfileCard(data) {
 				</div>\
 			</div>\
 			<div class="profile-banner-footer">\
+				' + remote_user_info + '\
 				<ul class="stats">\
 					<li class="tweet-num"><a href="' + data.statusnet_profile_url + '" class="tweet-stats">' + window.sL.notices + '<strong>' + data.statuses_count + '</strong></a></li>\
 					<li class="following-num"><a href="' + data.statusnet_profile_url + '/subscriptions" class="following-stats">' + window.sL.following + '<strong>' + data.friends_count + '</strong></a></li>\
@@ -564,7 +579,7 @@ function buildExternalProfileCard(data) {
 						<span class="sandboxed-flag" data-tooltip="' + window.sL.sandboxedStreamDescription + '">' + window.sL.sandboxed + '</span>\
 						<h2 class="username">\
 							<span class="screen-name">' + data.screenNameWithServer + '</span>\
-							<span class="ostatus-link" data-tooltip="' + window.sL.goToTheUsersRemoteProfile + '">' + window.sL.goToTheUsersRemoteProfile + '</span>\
+							<span class="ostatus-link" data-tooltip="' + window.sL.goToTheUsersRemoteProfile + '" donthijack>' + window.sL.goToTheUsersRemoteProfile + '</span>\
 							' + follows_you + '\
 						</h2>\
 					</a>\
@@ -945,6 +960,13 @@ function setNewCurrentStream(streamObject,setLocation,fallbackId,actionOnSuccess
 				}
 			}
 
+		// local for local users requested by id, we want to go to the nickname-url instead
+		else if(streamObject.name == 'profile by id' && userArray && userArray.is_local === true) {
+			removeHistoryContainerItemByHref(window.siteInstanceURL + 'user/' + userArray.id);
+			setNewCurrentStream(pathToStreamRouter('/' + userArray.screen_name),true,false,actionOnSuccess);
+
+		}
+
 		// getting stream failed, and we don't have a fallback id
 		else if(queet_data === false) {
 
@@ -1017,6 +1039,19 @@ function setNewCurrentStream(streamObject,setLocation,fallbackId,actionOnSuccess
 			// profile card from user array
 			if(userArray) {
 				addProfileCardToDOM(buildProfileCard(userArray));
+
+				// set remote users username in the browsing history container
+				// (because stream-router can't know username from the URL, that only have id:s)
+				if(userArray.is_local !== true) {
+					var serverUrl = guessInstanceUrlWithoutProtocolFromProfileUrlAndNickname(userArray.statusnet_profile_url, userArray.screen_name);
+					var screenNameWithServer = '@' + userArray.screen_name + '@' + serverUrl;
+					updateHistoryContainerItemByHref(window.siteInstanceURL + 'user/' + userArray.id, screenNameWithServer);
+					updateHistoryContainerItemByHref(userArray.statusnet_profile_url, screenNameWithServer);
+					}
+				// if we for some reason have visited a local user's profile by id, adjust the history container
+				else {
+					updateHistoryContainerItemByHref(window.siteInstanceURL + 'user/' + userArray.id, userArray.screen_name);
+					}
 				}
 			// remove any trailing profile cards
 			else {
@@ -1781,7 +1816,7 @@ function addToFeed(feed, after, extraClasses) {
 				// external
 				var ostatusHtml = '';
 				if(obj.from_profile.is_local === false) {
-					ostatusHtml = '<a target="_blank" data-tooltip="' + window.sL.goToOriginalNotice + '" class="ostatus-link" href="' + obj.from_profile.statusnet_profile_url + '"></a>';
+					ostatusHtml = '<a target="_blank" data-tooltip="' + window.sL.goToOriginalNotice + '" class="ostatus-link" href="' + obj.from_profile.statusnet_profile_url + '" donthijack></a>';
 					}
 
 				if(obj.ntype == 'like') {
@@ -2027,7 +2062,7 @@ function buildUserStreamItemHtml(obj) {
 	// external
 	var ostatusHtml = '';
 	if(obj.is_local === false) {
-		ostatusHtml = '<a target="_blank" title="' + window.sL.goToTheUsersRemoteProfile + '" class="ostatus-link" href="' + obj.statusnet_profile_url + '"></a>';
+		ostatusHtml = '<a target="_blank" title="' + window.sL.goToTheUsersRemoteProfile + '" class="ostatus-link" href="' + obj.statusnet_profile_url + '" donthijack></a>';
 		}
 
 	// rtl or not
@@ -2296,7 +2331,7 @@ function buildQueetHtml(obj, idInStream, extraClasses, requeeted_by, isConversat
 	// external
 	var ostatusHtml = '';
 	if(obj.user.is_local === false) {
-		ostatusHtml = '<a target="_blank" data-tooltip="' + window.sL.goToOriginalNotice + '" class="ostatus-link" href="' + obj.external_url + '"></a>';
+		ostatusHtml = '<a target="_blank" data-tooltip="' + window.sL.goToOriginalNotice + '" class="ostatus-link" href="' + obj.external_url + '" donthijack></a>';
 		var qSource = '<a href="' + obj.external_url + '">' + getHost(obj.external_url) + '</a>';
 		}
 	else {

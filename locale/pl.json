@@ -197,5 +197,8 @@
 "mutedStreamDescription":"Ukryłeś te konta na swojej osi czasu. Nadal będziesz otrzymywać powiadomienia od tych użytkowników, chyba że wybierzesz opcję &quot;Ukryj powiadomienia od wyciszonych użytkowników&quot;, znajdującą się w rozwijanym menu na stronie powiadomień.",
 "profileAndSettings":"Profil i ustawienia",
 "profileSettings":"Ustawienia profilu",
-"thisIsABookmark":"To jest zakładka stworzona w klasycznym interfejsie"
+"thisIsABookmark":"To jest zakładka stworzona w klasycznym interfejsie",
+"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
+	"findSomeone":"Find someone",
+	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
 }

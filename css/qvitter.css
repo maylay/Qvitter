@@ -1357,6 +1357,47 @@ body.rtl #footer-spinner-container {
     top: 9px;
     width: 12px;
     }
+
+
+#find-someone {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 0 #FFFFFF;
+    background-clip: padding-box;
+    border-radius: 6px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    overflow:hidden;
+	position: relative;
+	padding-top: 10px;
+	padding-right: 12px;
+	padding-bottom: 10px;
+	padding-left: 12px;
+	background-color: #F9F9F9;
+}
+
+#find-someone input {
+	padding: 6px 8px 5px 8px;
+	position: relative;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	width: 248px;
+	font-size: 13px;
+	color:#333;
+	line-height: 18px;
+	background-color: #fff;
+	margin:0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) inset, 0 1px 0 rgba(255, 255, 255, 0.075);
+	outline-color: #aaa;
+	display: block;
+	outline: none;
+}
+
+#find-someone input[disabled="disabled"] {
+	background-color: #eee;
+	color:#aaa;
+}
+
+
 #bookmark-container a:hover .chev-right {
 	background-position:-18px -508px;
 	}
@@ -4094,6 +4135,27 @@ div.nav-session {
     float: right;
     position: relative;
     width: 588px;
+	}
+
+.profile-card.local-user > .ostatus-link,
+.profile-card.local-user .username .screen-name-with-server,
+.profile-card.remote-user .username .screen-name,
+.profile-card.remote-user ul.stats {
+	display:none;
+	}
+.profile-card .remote-user-info {
+	background-color: pink;
+	color: #333;
+	text-shadow: none;
+	border: 10px solid #fff;
+	padding: 10px;
+	}
+.profile-card .remote-user-info a {
+	text-decoration: underline;
+	color:#333;
+	}
+.hover-card .profile-card .remote-user-info {
+	display:none;
 	}
 
 .hover-card .profile-card {

@@ -694,6 +694,7 @@ class QvitterAction extends ApiAction
                                 ?>
         						</div>
         						<div class="menu-container" id="bookmark-container"></div>
+                                <div id="find-someone"><input id="find-someone-input" placeholder="" data-tooltip=""/></div>                                
                                 <div class="menu-container" id="history-container"></div>
                                 <div id="clear-history"></div>
         						<div id="qvitter-notice"><?php print common_config('site', 'qvitternotice'); ?></div><?php
@@ -817,7 +818,8 @@ class QvitterAction extends ApiAction
 						}
 					#user-footer-inner,
 					.inline-reply-queetbox,
-					#popup-faq #faq-container p.indent {
+					#popup-faq #faq-container p.indent,
+                    #find-someone {
 						background-color:/*LIGHTERBACKGROUNDCOLORSTART*/rgb(205,230,239)/*LIGHTERBACKGROUNDCOLOREND*/;
 						}
 					#user-footer-inner,
@@ -831,7 +833,8 @@ class QvitterAction extends ApiAction
                     .quoted-notice:hover,
                     .oembed-item:hover,
                     .stream-item:hover:not(.expanded) .quoted-notice:hover,
-                    .stream-item:hover:not(.expanded) .oembed-item:hover {
+                    .stream-item:hover:not(.expanded) .oembed-item:hover,
+                    #find-someone input:focus {
 						border-color:/*LIGHTERBORDERCOLORSTART*/rgb(155,206,224)/*LIGHTERBORDERCOLOREND*/;
 						}
 					span.inline-reply-caret .caret-inner {

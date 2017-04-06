@@ -197,5 +197,8 @@
 	"mutedStreamDescription":"Du har skjul disse kontoene fra din tidslinje. Du vil alikevel motta notifikasjoner fra disse kontoene, hvis da du ikke velger &quot;Skjul notifikasjoner fra forstummede brukere&quot; fra tannhjul menyen på notifikasjons siden.",
 	"profileAndSettings":"Profiler og innstillinger",
 	"profileSettings":"Profil innstillinger",
-	"thisIsABookmark":"Dette er et bokmerke som ble laget i det klassiske grensesnittet"
+	"thisIsABookmark":"Dette er et bokmerke som ble laget i det klassiske grensesnittet",
+	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
+	"findSomeone":"Find someone",
+	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
 }

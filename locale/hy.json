@@ -194,5 +194,8 @@
 	"mutedStreamDescription":"Դուք թացրել եք այս օգտատերերին Ձեր հոսքից։ Դուք կշարունակեք ստանալ այս օգտատերերից ծանուցումներ, եթե չընտրեք &quot;Թաքցնել արհամարհվող օգտատերերի ծանուցումները &quot; Ծանուցումների էջի մենյուի կարգավորումներում",
 	"profileAndSettings":"Էջ և կարգավորումներ",
 	"profileSettings":"Էջի կարգավորումներ",
-	"thisIsABookmark":"This is a bookmark created in the Classic interface"
+	"thisIsABookmark":"This is a bookmark created in the Classic interface",
+	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
+	"findSomeone":"Find someone",
+	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
 }

@@ -197,5 +197,8 @@
 	"mutedStreamDescription":"Has ocultat aquests comptes de la teva línia temporal. Seguiràs rebent notificacions d'aquests comptes tret que seleccions &quot;Amagar notificacions d'usuaris silenciats&quot; des del menú amb forma de roda dentada a la pàgina de notificacions.",
 	"profileAndSettings":"Perfil i ajustos",
 	"profileSettings":"Ajustos del perfil",
-	"thisIsABookmark":"Això és un marcador va crear en l'interfície Clàssic"
+	"thisIsABookmark":"Això és un marcador va crear en l'interfície Clàssic",
+	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
+	"findSomeone":"Find someone",
+	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname"
 }

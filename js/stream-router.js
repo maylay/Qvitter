@@ -57,7 +57,14 @@ window.pluginStreamObjects = [];
    · · · · · · · · · */
 
 function setUrlFromStream(streamObject) {
-	history.pushState({strm:streamObject.path},'','/' + streamObject.path);
+
+	// if we know the nickname for profiles, go with that instead of the id
+	if(streamObject.name == 'profile by id' && streamObject.nickname !== false) {
+		history.pushState({strm:streamObject.nickname},'','/' + streamObject.nickname);
+		}
+	else {
+		history.pushState({strm:streamObject.path},'','/' + streamObject.path);
+	}
 	}
 
 
@@ -387,7 +394,7 @@ function pathToStreamRouter(path) {
             streamObject.streamSubHeader = window.sL.notices + '<div class="queet-streams">/ <a class="queet-stream mentions" href="' + window.siteInstanceURL + streamObject.nickname + '/replies">' + window.sL.mentions + '</a> / <a class="queet-stream favorites" href="' + window.siteInstanceURL + streamObject.nickname + '/favorites">' + window.sL.favoritesNoun +'</a></div>';
             }
         streamObject.id = pathSplit[1];
-		streamObject.stream = 'statuses/user_timeline.json?id=' + streamObject.id + '&withuserarray=1';
+		streamObject.stream = 'qvitter/statuses/user_timeline.json?id=' + streamObject.id + '&withuserarray=1';
 		return streamObject;
 		}
 
