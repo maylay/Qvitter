@@ -1036,6 +1036,9 @@ function setNewCurrentStream(streamObject,setLocation,fallbackId,actionOnSuccess
 				setUrlFromStream(streamObject);
 				}
 
+			// add this stream to the history menu
+			addStreamToHistoryMenuAndMarkAsCurrent(streamObject);				
+
 			// profile card from user array
 			if(userArray) {
 				addProfileCardToDOM(buildProfileCard(userArray));
@@ -1074,9 +1077,6 @@ function setNewCurrentStream(streamObject,setLocation,fallbackId,actionOnSuccess
 			// start checking for new queets again
 			window.clearInterval(checkForNewQueetsInterval);
 			checkForNewQueetsInterval=window.setInterval(function(){checkForNewQueets()},window.timeBetweenPolling);
-
-			// add this stream to the history menu
-			addStreamToHistoryMenuAndMarkAsCurrent(streamObject);
 
 			remove_spinner();
 
