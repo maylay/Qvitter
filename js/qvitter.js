@@ -285,7 +285,6 @@ $('body').on('mouseover',function (e) {
 			possibleNickname = $(e.target).text();
 			}
 		}
-
 	// see if we have it in cache, otherwise query server
 	getUserArrayData(hrefAttr, possibleNickname, timeNow, targetElement, function(userArray, timeOut){
 
@@ -328,9 +327,8 @@ $('body').on('mouseover',function (e) {
 					// we query it for the lastest data
 					if((typeof window.userArrayLastRetrieved[hrefAttr] == 'undefined') || (timeNow - window.userArrayLastRetrieved[hrefAttr]) > 60000) {
 						window.userArrayLastRetrieved[hrefAttr] = timeNow;
-
 						// local users
-						if(userArray.local !== null && userArray.local.is_local === true) {
+						if(userArray.local && userArray.local.is_local === true) {
 							getFromAPI('users/show.json?id=' + userArray.local.screen_name, function(data){
 								if(data) {
 									var newProfileCard = buildProfileCard(data);
@@ -341,7 +339,7 @@ $('body').on('mouseover',function (e) {
 							}
 
 						// external users
-						else if(userArray.local === null || userArray.local.is_local === false) {
+						else if(!userArray.local || userArray.local.is_local === false) {
 							getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(hrefAttr),function(data){
 								if(data && data.external !== null) {
 									var newProfileCard = buildExternalProfileCard(data);
