@@ -1093,7 +1093,7 @@ function proceedToSetLanguageAndLogin(data){
 function proceedLoggedOut() {
 	display_spinner();
 	setNewCurrentStream(getStreamFromUrl(),true,false,function(){
-		$('input#nickname').focus();
+		// $('input#nickname').focus(); --> maybe not a good idea on mobile?
 		$('#page-container').css('opacity','1');
 		});
 	}
