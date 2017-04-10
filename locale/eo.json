@@ -200,5 +200,6 @@
 	"thisIsABookmark":"Ĉi tio estas paĝosigno kreita en la klasika interfaco",
 	"thisIsARemoteUser":"<strong>Atentu!</strong> Ĉi tiu estas fora uzanto. Ĉi tiu paĝo estas nur konservita kopio el ĝia profilo, kaj enhavas nur datumojn konatajn de ĉi tiu GNU social-retejo. Vizitu <a href=\"{remote-profile-url}\" donthijack>la uzantprofilon ĉi ĝia servilo</a> por vidi la tutan profilon.",
 	"findSomeone":"Trovu iun",
-	"findSomeoneTooltip":"Enigu uzantnomon aŭ profilo-adreson, ekz. @lokauzanto aŭ https://fora.retejo/kromnomo"
+	"findSomeoneTooltip":"Enigu uzantnomon aŭ profilo-adreson, ekz. @lokauzanto aŭ https://fora.retejo/kromnomo",
+	"tooltipAttachFile":"Attach a file"
 }

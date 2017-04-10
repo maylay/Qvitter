@@ -200,5 +200,6 @@
 	"thisIsABookmark":"これはクラシックインターフェースで作られたブックマークです",
 	"thisIsARemoteUser":"<strong>注意!</strong> これはリモートユーザーです。このページはリモートユーザーのプロフィールのキャッシュされている複製であり、このGNU socialインスタンスに保存されたデータのみを含みます。<a href=\"{remote-profile-url}\" donthijack>このユーザーが所属するサーバーのプロフィール</a>で完全なプロフィールを閲覧できます。",
 	"findSomeone":"誰かを検索",
-	"findSomeoneTooltip":"ユーザー名またはプロフィールURLを入力 (例: @localuser または https://remote.instance/nickname)"
+	"findSomeoneTooltip":"ユーザー名またはプロフィールURLを入力 (例: @localuser または https://remote.instance/nickname)",
+	"tooltipAttachFile":"Attach a file"
 }

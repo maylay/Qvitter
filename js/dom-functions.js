@@ -1037,7 +1037,7 @@ function setNewCurrentStream(streamObject,setLocation,fallbackId,actionOnSuccess
 				}
 
 			// add this stream to the history menu
-			addStreamToHistoryMenuAndMarkAsCurrent(streamObject);				
+			addStreamToHistoryMenuAndMarkAsCurrent(streamObject);
 
 			// profile card from user array
 			if(userArray) {
@@ -1465,7 +1465,7 @@ function queetBoxPopUpHtml() {
 		}
 
 	var startText = encodeURIComponent(window.sL.compose);
-	return '<div class="inline-reply-queetbox"><div id="pop-up-queet-box" class="queet-box queet-box-syntax" data-start-text="' + startText + '" data-cached-text="' + cachedText + '">' + decodeURIComponent(startText) + '</div><div class="syntax-middle"></div><div class="syntax-two" contenteditable="true"></div><div class="mentions-suggestions"></div><div class="queet-toolbar toolbar-reply"><div class="queet-box-extras"><button data-tooltip="' + window.sL.tooltipAttachImage + '" class="upload-image"></button><button data-tooltip="' + window.sL.tooltipShortenUrls + '" class="shorten disabled">URL</button></div><div class="queet-button"><span class="queet-counter"></span><button>' + window.sL.queetVerb + '</button></div></div></div>';
+	return '<div class="inline-reply-queetbox"><div id="pop-up-queet-box" class="queet-box queet-box-syntax" data-start-text="' + startText + '" data-cached-text="' + cachedText + '">' + decodeURIComponent(startText) + '</div><div class="syntax-middle"></div><div class="syntax-two" contenteditable="true"></div><div class="mentions-suggestions"></div><div class="queet-toolbar toolbar-reply"><div class="queet-box-extras"><button data-tooltip="' + window.sL.tooltipAttachFile + '" class="upload-image"></button><button data-tooltip="' + window.sL.tooltipShortenUrls + '" class="shorten disabled">URL</button></div><div class="queet-button"><span class="queet-counter"></span><button>' + window.sL.queetVerb + '</button></div></div></div>';
 	}
 
 
@@ -1550,7 +1550,7 @@ function replyFormHtml(streamItem,qid) {
 
 	startText = encodeURIComponent(startText);
 	repliesText = encodeURIComponent(repliesText);
-	return '<div class="inline-reply-queetbox"><span class="inline-reply-caret"><span class="caret-inner"></span></span><img class="reply-avatar" src="' + $('#user-avatar').attr('src') + '" /><div class="queet-box queet-box-syntax" id="queet-box-' + qid + '" data-start-text="' + startText + '" data-replies-text="' + repliesText + '" data-cached-text="' + cachedText + '">' + decodeURIComponent(startText) + '</div><div class="syntax-middle"></div><div class="syntax-two" contenteditable="true"></div><div class="mentions-suggestions"></div><div class="queet-toolbar toolbar-reply"><div class="queet-box-extras"><button data-tooltip="' + window.sL.tooltipAttachImage + '" class="upload-image"></button><button data-tooltip="' + window.sL.tooltipShortenUrls + '" class="shorten disabled">URL</button></div><div class="queet-button"><span class="queet-counter"></span><button>' + window.sL.queetVerb + '</button></div></div></div>';
+	return '<div class="inline-reply-queetbox"><span class="inline-reply-caret"><span class="caret-inner"></span></span><img class="reply-avatar" src="' + $('#user-avatar').attr('src') + '" /><div class="queet-box queet-box-syntax" id="queet-box-' + qid + '" data-start-text="' + startText + '" data-replies-text="' + repliesText + '" data-cached-text="' + cachedText + '">' + decodeURIComponent(startText) + '</div><div class="syntax-middle"></div><div class="syntax-two" contenteditable="true"></div><div class="mentions-suggestions"></div><div class="queet-toolbar toolbar-reply"><div class="queet-box-extras"><button data-tooltip="' + window.sL.tooltipAttachFile + '" class="upload-image"></button><button data-tooltip="' + window.sL.tooltipShortenUrls + '" class="shorten disabled">URL</button></div><div class="queet-button"><span class="queet-counter"></span><button>' + window.sL.queetVerb + '</button></div></div></div>';
 	}
 
 

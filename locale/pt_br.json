@@ -200,5 +200,6 @@
 	"thisIsABookmark":"Este é um favorito criado na interface clássica",
 	"thisIsARemoteUser":"<strong>Atenção!</strong> Este é um usuário remoto. Esta página é apenas uma cópia preservada do perfil do usuário, e inclui apenas dados conhecidos por esta instância do GNU social. Visite <a href=\"{remote-profile-url}\" donthijack>o perfil deste usuário no servidor dele</a> para ver o perfil completo.",
 	"findSomeone":"Encontrar alguém",
-	"findSomeoneTooltip":"Escreva o nome de usuário ou url do perfil, por exemplo @usuariolocal ou https://instancia.remota/apelido"
+	"findSomeoneTooltip":"Escreva o nome de usuário ou url do perfil, por exemplo @usuariolocal ou https://instancia.remota/apelido",
+	"tooltipAttachFile":"Attach a file"
 }

@@ -1063,7 +1063,7 @@ function proceedToSetLanguageAndLogin(data){
 	$('#accessibility-toggle-link').html(window.sL.accessibilityToggleLink);
 	$('#settingslink .nav-session').attr('data-tooltip',window.sL.profileAndSettings);
 	$('#top-compose').attr('data-tooltip',window.sL.compose);
-	$('button.upload-image').attr('data-tooltip',window.sL.tooltipAttachImage);
+	$('button.upload-image').attr('data-tooltip',window.sL.tooltipAttachFile);
 	$('button.shorten').attr('data-tooltip',window.sL.tooltipShortenUrls);
 	$('.reload-stream').attr('data-tooltip',window.sL.tooltipReloadStream);
 	$('#clear-history').html(window.sL.clearHistory);
