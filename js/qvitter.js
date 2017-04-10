@@ -386,7 +386,7 @@ function getUserArrayData(maybeProfileUrl,maybeNickname,timeNow,targetElement,ca
 						if((typeof window.userArrayLastRetrieved[maybeProfileUrl] == 'undefined') || (timeNow - window.userArrayLastRetrieved[maybeProfileUrl]) > 60000) {
 							window.userArrayLastRetrieved[maybeProfileUrl] = timeNow;
 							getFromAPI('qvitter/external_user_show.json?profileurl=' + encodeURIComponent(maybeProfileUrl),function(data){
-								if(data && data.external !== null) {
+								if(data) {
 
 									// we want hover cards to appear _at least_ 600ms after hover (see below)
 									var timeAfterServerQuery = new Date().getTime();
