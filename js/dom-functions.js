@@ -488,7 +488,6 @@ function buildProfileCard(data) {
    · · · · · · · · · */
 
 function buildExternalProfileCard(data) {
-
 	// follows me?
 	var follows_you = '';
 	if(data.local !== null && data.local.follows_you === true  && window.loggedIn.id != data.local.id) {
@@ -497,7 +496,7 @@ function buildExternalProfileCard(data) {
 
 	// follow button
 	var followButton = '';
-	if(window.loggedIn !== false && typeof data.local != 'undefined' && data.local !== null) {
+	if(window.loggedIn !== false && typeof data.local != 'undefined' && data.local) {
 		var followButton = buildFollowBlockbutton(data.local);
 		}
 
