@@ -45,6 +45,20 @@ class QvitterAction extends ApiAction
     {
         parent::prepare($args);
 
+        // redirect user/:id for local users to their nickname url
+		if(substr($_SERVER['REQUEST_URI'],0,6) == '/user/') {
+			$user_id = substr($_SERVER['REQUEST_URI'],6);
+			try {
+                $user = User::getKV('id', $user_id);
+                if($user instanceof User) {
+                    $nickname = $user->nickname;
+                    common_redirect(common_local_url('showstream',array('nickname'=>$nickname)), 303);
+                    }
+            } catch (Exception $e) {
+                //
+            }
+        }
+
         $user = common_current_user();
 
         return true;
@@ -694,7 +708,7 @@ class QvitterAction extends ApiAction
                                 ?>
         						</div>
         						<div class="menu-container" id="bookmark-container"></div>
-                                <div id="find-someone"><input id="find-someone-input" placeholder="" data-tooltip=""/></div>                                
+                                <div id="find-someone"><input id="find-someone-input" placeholder="" data-tooltip=""/></div>
                                 <div class="menu-container" id="history-container"></div>
                                 <div id="clear-history"></div>
         						<div id="qvitter-notice"><?php print common_config('site', 'qvitternotice'); ?></div><?php
