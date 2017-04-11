@@ -2156,10 +2156,9 @@ function checkForNewQueets() {
 		if(window.loggedIn && (window.currentStreamObject.type == 'notices' || window.currentStreamObject.type == 'notifications')) {
 			var lastId = $('#feed-body').children('.stream-item').not('.temp-post').not('.posted-from-form').attr('data-quitter-id-in-stream');
 			var addThisStream = window.currentStreamObject.stream;
-			var timeNow = new Date().getTime();
 			getFromAPI(addThisStream + qOrAmp(window.currentStreamObject.stream) + 'since_id=' + lastId,function(data){
+				$('body').removeClass('loading-newer');
 				if(data) {
-					$('body').removeClass('loading-newer');
 					if(addThisStream == window.currentStreamObject.stream) {
 						addToFeed(data, false, 'hidden');
 
@@ -2178,7 +2177,6 @@ function checkForNewQueets() {
 			}
 		}
 	}
-
 
 /* ·
    ·
