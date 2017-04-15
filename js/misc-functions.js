@@ -1054,7 +1054,9 @@ function userArrayCacheGetUserNicknameById(id) {
 function detectLocalOrExternalUserObject(userObject) {
 	var dataProfileImageUrlWithoutProtocol = removeProtocolFromUrl(userObject.profile_image_url);
 	var siteInstanceURLWithoutProtocol = removeProtocolFromUrl(window.siteInstanceURL);
-	if(dataProfileImageUrlWithoutProtocol.substring(0,siteInstanceURLWithoutProtocol.length) == siteInstanceURLWithoutProtocol){
+	if(dataProfileImageUrlWithoutProtocol.substring(0,siteInstanceURLWithoutProtocol.length) == siteInstanceURLWithoutProtocol
+		|| dataProfileImageUrlWithoutProtocol.substring(0,window.avatarServer.length) == window.avatarServer
+	){
 		return 'local';
 		}
 	else {

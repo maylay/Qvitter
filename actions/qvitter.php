@@ -302,10 +302,8 @@ class QvitterAction extends ApiAction
                     }
                 }
 
-
 				?>
 				<script>
-
 					/*
 					@licstart  The following is the entire license notice for the
 					JavaScript code in this page.
@@ -373,6 +371,7 @@ class QvitterAction extends ApiAction
 					window.fullUrlToThisQvitterApp = '<?php print $qvitterpath; ?>';
 					window.siteRootDomain = '<?php print $siterootdomain; ?>';
 					window.siteInstanceURL = '<?php print $instanceurl; ?>';
+					window.avatarServer= <?php print json_encode(common_config('avatar', 'server')) ?>;
 					window.defaultLinkColor = '<?php print QvitterPlugin::settings("defaultlinkcolor"); ?>';
 					window.defaultBackgroundColor = '<?php print QvitterPlugin::settings("defaultbackgroundcolor"); ?>';
 					window.siteBackground = '<?php print QvitterPlugin::settings("sitebackground"); ?>';
