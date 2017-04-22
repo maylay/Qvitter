@@ -944,7 +944,7 @@ class QvitterPlugin extends Plugin {
     /**
      * Mark single notification as seen
      */
-    public function markNotificationAsSeen($notice_id, $to_profile_id, $ntype)
+    public static function markNotificationAsSeen($notice_id, $to_profile_id, $ntype)
     {
     $notification_to_mark_as_seen = QvitterNotification::pkeyGet(array(
         'is_seen' => 0,
