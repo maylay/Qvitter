@@ -59,7 +59,7 @@
 	"shortmonthsDecember": "des",
 	"time12am": "{time} am",
 	"time12pm": "{time} pm",
-	"longDateFormat": "{time12} - {day} {month} {year}",
+	"longDateFormat": "{time24} - {day} {month} {year}",
 	"shortDateFormatSeconds": "{seconds}s",
 	"shortDateFormatMinutes": "{minutes}m",
 	"shortDateFormatHours": "{hours}t",
