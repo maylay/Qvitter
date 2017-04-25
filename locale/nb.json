@@ -131,7 +131,7 @@
 	"tooltipShortenUrls":"Krympe alle URLer i din Queet",
 	"tooltipReloadStream":"Last denne strømmen inn på nytt",
 	"tooltipRemoveBookmark":"Slett dette bokmerket",
-	"clearHistory":"Slett nettleser historie",
+	"clearHistory":"Slett besøkshistorie",
 	"ERRORsomethingWentWrong":"Noe gikk galt.",
 	"ERRORmustBeLoggedIn":"Du må være pålogget for å vise denne strømmen.",
 	"ERRORcouldNotFindUserWithNickname":"Kan ikke finne en bruker med brukerid \"{nickname}\" på denne instansen",
