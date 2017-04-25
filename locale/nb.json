@@ -198,8 +198,8 @@
 	"profileAndSettings":"Profiler og innstillinger",
 	"profileSettings":"Profil innstillinger",
 	"thisIsABookmark":"Dette er et bokmerke som ble laget i det klassiske grensesnittet",
-	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
-	"findSomeone":"Find someone",
-	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname",
-	"tooltipAttachFile":"Attach a file"
+	"thisIsARemoteUser":"<strong>Advarsel!</strong> Dette er en ekstern bruker. Denne siden er en hurtiglagret versjon av profilen som bare inneholder data kjent for denne GNU social instansen. Gå til <a href=\"{remote-profile-url}\" donthijack>brukerens profil på egen instans</a> for å vise hele profilen.",
+	"findSomeone":"Finn noen",
+	"findSomeoneTooltip":"Skriv inn et brukernavn, eller en profil url, for eksempel. @lokalbruker eller https://ekstern.instans/brukernavn",
+	"tooltipAttachFile":"Legg ved fil"
 }
