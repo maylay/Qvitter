@@ -98,27 +98,27 @@ class QvitterAction extends ApiAction
 		$siterootdomain = common_config('site','server');
 		$qvitterpath = Plugin::staticPath('Qvitter', '');
 		$apiroot = common_path('api/', StatusNet::isHTTPS());
-
+		$instanceurl = common_path('', StatusNet::isHTTPS());
+		$favicon_path = QvitterPlugin::settings("favicon_path");
 		$attachmentconfig=common_config('attachments');
 		if(StatusNet::isHTTPS() && $attachmentconfig['sslserver']){
 			$attachmentroot ='https://'.$attachmentconfig['sslserver'].$attachmentconfig['path'];
 		} elseif(!StatusNet::isHTTPS() && $attachmentconfig['server']) {
 			$attachmentroot ='http://'.$attachmentconfig['server'].$attachmentconfig['path'];
 		} else {
-			$attachmentroot = common_path('attachment/', StatusNet::isHTTPS());
+			$attachmentroot = $instanceurl.$attachmentconfig['path'];
 		}
 		$avatarconfig=common_config('avatar');
 		if($avatarconfig['server']) {
 			if(StatusNet::isHTTPS() ){
 				$avatarroot ='https://'.$avatarconfig['server'].$avatarconfig['path'];
-			} elseif(!StatusNet::isHTTPS()) {
+			} else {
 				$avatarroot ='http://'.$avatarconfig['server'].$avatarconfig['path'];
 			}
 		} else {
-			$attachmentroot = common_path('attachment/', StatusNet::isHTTPS());
+			$avatarroot = $instanceurl.$avatarconfig['path'];
 		}
-		$instanceurl = common_path('', StatusNet::isHTTPS());
-		$favicon_path = QvitterPlugin::settings("favicon_path");
+
 
 		// user's browser's language setting
 		$user_browser_language = 'en'; // use english if we can't find the browser language
