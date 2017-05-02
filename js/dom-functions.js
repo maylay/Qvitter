@@ -2308,9 +2308,9 @@ function buildQueetHtml(obj, idInStream, extraClasses, requeeted_by, isConversat
 		});
 
 	// if statusnetHTML is contains <p>:s, unwrap those (diaspora..)
-	statusnetHTML.children('p').each(function(){
+	/*statusnetHTML.children('p').each(function(){
 		$(this).contents().unwrap();
-		});
+		});*/
 
 	// bookmarks created by the bookmark plugin get's a tooltip
 	statusnetHTML.find('.xfolkentry').each(function(){
