@@ -197,9 +197,9 @@
 	"mutedStreamDescription":"Du hast diese Nutzer in Deiner Timeline ausgeblendet. Benachrichtigungen von diesen Nutzern werden werden weiterhin angezeigt. Um sie ebenfalls zu verbergen, wähle im Zahnradmenu der Benachrichtigungsseite die Option &quot;Benachrichtigungen von ausgeblendeten Benutzern verbergen&quot;.",
 	"profileAndSettings":"Profil und Einstellungen",
 	"profileSettings":"Profileinstellungen",
-	"thisIsABookmark":"This is a bookmark created in the Classic interface",
-	"thisIsARemoteUser":"<strong>Attention!</strong> This is a remote user. This page is only a cached copy of their profile, and includes only data known to this GNU social instance. Go to the <a href=\"{remote-profile-url}\" donthijack>user's profile on their server</a> to view their full profile.",
-	"findSomeone":"Find someone",
-	"findSomeoneTooltip":"Input a username or a profile url, e.g. @localuser or https://remote.instance/nickname",
-	"tooltipAttachFile":"Attach a file"
+	"thisIsABookmark":"Dies ist ein Lesezeichen das in der Klassischen Ansicht erstellt wurde",
+	"thisIsARemoteUser":"<strong>Achtung!</strong> Dies ist ein entfernter Nutzer. Diese Seite ist nur eine zwischengespeicherte Kopie des Profils und enthält nur Daten, welcher dieser GNU Social Instanz bekannt sind. Gehe zum <a href=\"{remote-profile-url}\" donthijack>Profil des Nutzers auf seinem Server</a> um das gesamte Profile zu sehen.",
+	"findSomeone":"Suche jemanden",
+	"findSomeoneTooltip":"Gib einen Benutzernamen oder eine Profil-URL ein, z.B. @lokalernutzer oder https://entfernte.instanz/nickname",
+	"tooltipAttachFile":"Datei anhängen"
 }
