@@ -726,17 +726,13 @@ function updateAllQueetsTimes() {
    · · · · · · · · · */
 
 function isLocalURL(url) {
-	if(url.substring(0,window.siteInstanceURL.length) == window.siteInstanceURL) {
+	if(url.substring(0,window.siteInstanceURL.length) == window.siteInstanceURL // site url
+		|| url.substring(0,window.siteAttachmentURLBase.length) == window.siteAttachmentURLBase // attachment url
+		|| url.substring(0,window.siteAvatarURLBase.length) == window.siteAvatarURLBase // avatar url
+	) {
 		return true;
 		}
-	else {
-		if(url.substring(0,window.siteAttachmentURLBase.length) == window.siteAttachmentURLBase) {
-			return true;
-			}
-		else {
-			return false;
-			}
-		}
+	return false;
 	}
 
 
@@ -1052,12 +1048,10 @@ function userArrayCacheGetUserNicknameById(id) {
    · · · · · · · · · */
 
 function detectLocalOrExternalUserObject(userObject) {
-	var dataProfileImageUrlWithoutProtocol = removeProtocolFromUrl(userObject.profile_image_url);
-	var siteInstanceURLWithoutProtocol = removeProtocolFromUrl(window.siteInstanceURL);
-	if(dataProfileImageUrlWithoutProtocol.substring(0,siteInstanceURLWithoutProtocol.length) == siteInstanceURLWithoutProtocol){
+
+	if(isLocalURL(userObject.profile_image_url) ) {
 		return 'local';
-		}
-	else {
+	} else {
 		return 'external';
 		}
 	}

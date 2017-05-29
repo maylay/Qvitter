@@ -98,23 +98,33 @@ class QvitterAction extends ApiAction
 		$siterootdomain = common_config('site','server');
 		$qvitterpath = Plugin::staticPath('Qvitter', '');
 		$apiroot = common_path('api/', StatusNet::isHTTPS());
-
+		$instanceurl = common_path('', StatusNet::isHTTPS());
+		$favicon_path = QvitterPlugin::settings("favicon_path");
 		$attachmentconfig=common_config('attachments');
 		if(StatusNet::isHTTPS() && $attachmentconfig['sslserver']){
 			$attachmentroot ='https://'.$attachmentconfig['sslserver'].$attachmentconfig['path'];
 		} elseif(!StatusNet::isHTTPS() && $attachmentconfig['server']) {
 			$attachmentroot ='http://'.$attachmentconfig['server'].$attachmentconfig['path'];
 		} else {
-			$attachmentroot = common_path('attachment/', StatusNet::isHTTPS());
+			$attachmentroot = $instanceurl.$attachmentconfig['path'];
 		}
-		$instanceurl = common_path('', StatusNet::isHTTPS());
-        $favicon_path = QvitterPlugin::settings("favicon_path");
+		$avatarconfig=common_config('avatar');
+		if($avatarconfig['server']) {
+			if(StatusNet::isHTTPS() ){
+				$avatarroot ='https://'.$avatarconfig['server'].$avatarconfig['path'];
+			} else {
+				$avatarroot ='http://'.$avatarconfig['server'].$avatarconfig['path'];
+			}
+		} else {
+			$avatarroot = $instanceurl.$avatarconfig['path'];
+		}
 
-        // user's browser's language setting
-        $user_browser_language = 'en'; // use english if we can't find the browser language
-        if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $user_browser_language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-            }
+
+		// user's browser's language setting
+		$user_browser_language = 'en'; // use english if we can't find the browser language
+		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+				$user_browser_language = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+				}
 
 
 		common_set_returnto(''); // forget this
@@ -302,10 +312,8 @@ class QvitterAction extends ApiAction
                     }
                 }
 
-
 				?>
 				<script>
-
 					/*
 					@licstart  The following is the entire license notice for the
 					JavaScript code in this page.
@@ -373,6 +381,7 @@ class QvitterAction extends ApiAction
 					window.fullUrlToThisQvitterApp = '<?php print $qvitterpath; ?>';
 					window.siteRootDomain = '<?php print $siterootdomain; ?>';
 					window.siteInstanceURL = '<?php print $instanceurl; ?>';
+					window.avatarServer= <?php print json_encode(common_config('avatar', 'server')) ?>;
 					window.defaultLinkColor = '<?php print QvitterPlugin::settings("defaultlinkcolor"); ?>';
 					window.defaultBackgroundColor = '<?php print QvitterPlugin::settings("defaultbackgroundcolor"); ?>';
 					window.siteBackground = '<?php print QvitterPlugin::settings("sitebackground"); ?>';
@@ -380,15 +389,16 @@ class QvitterAction extends ApiAction
 					window.customWelcomeText = <?php print json_encode(QvitterPlugin::settings("customwelcometext")); ?>;
 					window.urlShortenerAPIURL = '<?php print QvitterPlugin::settings("urlshortenerapiurl"); ?>';
 					window.urlShortenerSignature = '<?php print QvitterPlugin::settings("urlshortenersignature"); ?>';
-                    window.urlshortenerFormat = '<?php print QvitterPlugin::settings("urlshortenerformat"); ?>';
+					window.urlshortenerFormat = '<?php print QvitterPlugin::settings("urlshortenerformat"); ?>';
 					window.commonSessionToken = '<?php print common_session_token(); ?>';
 					window.siteMaxThumbnailSize = <?php print common_config('thumbnail', 'maxsize'); ?>;
 					window.siteAttachmentURLBase = '<?php print $attachmentroot; ?>';
+					window.siteAvatarURLBase = '<?php print $avatarroot; ?>';
 					window.siteEmail = '<?php print common_config('site', 'email'); ?>';
 					window.siteLicenseTitle = '<?php print common_config('license', 'title'); ?>';
 					window.siteLicenseURL = '<?php print common_config('license', 'url'); ?>';
 					window.customTermsOfUse = <?php print json_encode(QvitterPlugin::settings("customtermsofuse")); ?>;
-                    window.siteLocalOnlyDefaultPath = <?php print (common_config('public', 'localonly') ? 'true' : 'false'); ?>;
+					window.siteLocalOnlyDefaultPath = <?php print (common_config('public', 'localonly') ? 'true' : 'false'); ?>;
                     <?php
 
                         // Get all topics in Qvitter's namespace in Profile_prefs
