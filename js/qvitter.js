@@ -2852,9 +2852,9 @@ $('body').on('click', '.queet-toolbar button',function () {
 		// In firefox (and maybe some other browsers), queetBox.html() may have <div>s
 		// and may or may not have <br> in them.
 		// To deal with this, remove any <br>s right before </div> and then add ones.
-		queetBox.html(queetBox.html().replace(/(<br>)*<\/div>/g, '<br></div>').replace(/<br>/g, '{{{lb}}}'));
+		queetBox.html(queetBox.html().replace(/(<br>)*<\/div>/g, '<br></div>').replace(/({|})/g, '!$1').replace(/<br>/g, '{{{lb}}}'));
 		var queetText =  $.trim(queetBox.text().replace(/^\s+|\s+$/g, '').replace(/\n/g, ''));
-		queetText = queetText.replace(/{{{lb}}}/g, "\n");
+		queetText = queetText.replace(/{{{lb}}}/g, "\n").replace(/!({|})/g, '$1');
 
 		var queetTempText = replaceHtmlSpecialChars(queetText.replace(/\n/g,'<br>')); // no xss
 		queetTempText = queetTempText.replace(/&lt;br&gt;/g,'<br>'); // but preserve line breaks
