@@ -114,7 +114,7 @@ class NotificationStream
 
             $all = array_merge($all, $notifications);
 
-            if (count($notifications < count($ids))) {
+            if (count($notifications) < count($ids)) {
                 $offset += $limit;
                 $limit  -= count($notifications);
             }
